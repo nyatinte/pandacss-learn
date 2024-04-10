@@ -1,43 +1,50 @@
-import { css } from '../styled-system/css'
-import { center, circle, hstack, stack } from '../styled-system/patterns'
+import { cva } from '../styled-system/css'
+import { styled } from '../styled-system/jsx'
+import { stack } from '../styled-system/patterns'
+
+const buttonRecipe = cva({
+  base: { cursor: 'pointer' },
+  variants: {
+    visual: {
+      solid: {
+        bg: 'red.500',
+        color: 'white',
+      },
+      outline: { borderWidth: '1px', borderColor: 'red.500' },
+    },
+    size: {
+      sm: { padding: '4', fontSize: '12px' },
+      lg: { padding: '8', fontSize: '24px' },
+    },
+  },
+  compoundVariants: [
+    {
+      visual: 'solid',
+      size: 'sm',
+      css: { borderWidth: '4px', borderColor: 'red.700' },
+    },
+  ],
+  defaultVariants: { visual: 'solid', size: 'lg' },
+})
+
+const Button = styled('button', buttonRecipe)
 
 function App() {
   return (
     <div
-      className={center({
-        height: '100vh',
+      className={stack({
+        bg: 'yellow.100',
+        padding: '40',
+        h: '100vh',
+        gap: '10',
       })}
     >
-      <div
-        className={css({
-          border: '3px solid black',
-          boxShadow: '4px 4px 0px black',
-          borderRadius: '13px',
-          padding: 6,
-          maxWidth: '300px',
-        })}
-      >
-        <div className={stack({ gap: 4 })}>
-          <div className={hstack({ gap: 4 })}>
-            <div className={circle({ size: 12, overflow: 'hidden' })}>
-              <img
-                src="https://avatars.githubusercontent.com/u/104000239?s=48&v=4"
-                alt="A cat"
-                height="120px"
-                width="120px"
-              />
-            </div>
-            <div>
-              <h2 className={css({ fontWeight: '600' })}>Nyatinte</h2>
-              <p className={css({ color: '#7D7D7D' })}>@nyatinte</p>
-            </div>
-          </div>
-          <blockquote className={css({ fontSize: '17px' })}>
-            I'm Learning PandaCSS right now. It's looking good so far. like
-            TailwindCSS but with a type safe.
-          </blockquote>
-        </div>
-      </div>
+      <Button type="button" visual="solid">
+        Click Me
+      </Button>
+      <Button type="button" visual="outline">
+        Get Started
+      </Button>
     </div>
   )
 }
